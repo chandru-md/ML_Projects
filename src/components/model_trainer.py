@@ -26,7 +26,7 @@ class ModelTrainer:
         self.model_trainer_config = ModelTrainerConfig()
 
 
-    def initiate_model_trainer(self, train_array, test_array,preprocessor_path):
+    def initiate_model_trainer(self, train_array, test_array):
         try:
             logging.info("Splitting training and test input data")
             X_train, y_train = train_array[:,:-1], train_array[:,-1]
@@ -53,7 +53,7 @@ class ModelTrainer:
 
             best_model = models[best_model_name]
 
-            if best_model_name<0.6:
+            if best_model_name < 0.6:
                 raise CustomException("No best model found")
             logging.info(f"Best model found on both training and testing dataset")
 
