@@ -3,7 +3,9 @@ import sys
 from dataclasses import dataclass
 
 from catboost import CatBoostRegressor
-from sklearn.ensemble import (RandomForestRegressor, GradientBoostingRegressor, AdaBoostRegressor)
+from sklearn.ensemble import (RandomForestRegressor,
+                               GradientBoostingRegressor,
+                                 AdaBoostRegressor,)
 
 from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsRegressor
@@ -29,8 +31,12 @@ class ModelTrainer:
     def initiate_model_trainer(self, train_array, test_array):
         try:
             logging.info("Splitting training and test input data")
-            X_train, y_train = train_array[:,:-1], train_array[:,-1]
-            X_test, y_test = test_array[:,:-1], test_array[:,-1]
+            X_train, y_train, X_test, y_test = (
+                train_array[:, :-1],
+                train_array[:, -1],
+                test_array[:, :-1],
+                test_array[:, -1]
+            )
 
             models = {
                 "Random Forest": RandomForestRegressor(),
@@ -53,7 +59,7 @@ class ModelTrainer:
 
             best_model = models[best_model_name]
 
-            if best_model_name < 0.6:
+            if best_model_score < 0.6:
                 raise CustomException("No best model found")
             logging.info(f"Best model found on both training and testing dataset")
 
